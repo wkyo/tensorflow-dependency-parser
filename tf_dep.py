@@ -100,6 +100,7 @@ def _parse_configure_py(content):
 
 
 def parse_tf_repo(repo='github:tensorflow/tensorflow/master'):
+    """Parse tensorflow repo to get versions of the dependencies"""
     tf_dep_info = {}
 
     # parse info from configure.py
@@ -129,10 +130,10 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
 
     parser = ArgumentParser()
-    # parser.add_argument('--http-proxy', dest='http_proxy')
     parser.add_argument(
         'repo', help='tensorflow repo path, current only supported github and local filesystem')
     args = parser.parse_args()
 
     result = parse_tf_repo(args.repo)
-    print(result)
+    for k, v in sorted(result.items(), key=lambda x: x[0]):
+        print('{:>20}: {}'.format(k, v))
